@@ -9,7 +9,7 @@
 4. Crie uma instância de banco MySql.
 5. Rode `yarn dev` ou `npm scripts dev`.
 
-## Como começar a desenvolver
+## Como começar a desenvolver( NUNCA COMMITE DIRETO NA MAIN )
 
 0. Sempre antes de começar a desenvolver rode `git pull` para baixar a versão mais atual no Github. Isso previne problemas de conflitos de merge ao trabalhar em grupo.
 1. Cria uma branch no seguinte formato, dependendo do seu objetivo:
