@@ -11,8 +11,15 @@
 
 ## Como começar a desenvolver( NUNCA COMMITE DIRETO NA MAIN )
 
+Prefixos:
+  * feature - para uma nova funcionalidade
+  * bugfix - para correção de um bug
+
+Descricao:
+  Busque ser o mais objetivo possível, separando as palavras separadas por hífen(-) ou underline(_).
+
 0. Sempre antes de começar a desenvolver rode `git pull` para baixar a versão mais atual no Github. Isso previne problemas de conflitos de merge ao trabalhar em grupo.
-1. Cria uma branch no seguinte formato, dependendo do seu objetivo:
+1. Cria uma branch no seguinte formato(sempre usando apenas letras minusculas), dependendo do seu objetivo:
   `git branch prefixo/descricao`
 2. Mude para essa branch usando:
   `git checkout prefixo/descricao`
