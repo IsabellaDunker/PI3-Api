@@ -23,3 +23,4 @@
   `git commit -m 'Mensagem em português que descreva as atividades feitas nesse commit'`
 6. Dê push para o Github:
   `git push`
+7. Quando todas as alterações que você fez estiverem prontas, entre na aba de pull requests no Github e crie um pull request. Base = Main, compare = A branch criada por você para desenvolver. Adicione um título e, se julgar necessário, uma descrição. Aguarde por feedback.
