@@ -15,7 +15,8 @@ class User extends Model {
       },
       cpf: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       cellphone: {
         type: DataTypes.STRING,
