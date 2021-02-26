@@ -6,5 +6,6 @@ module.exports = {
   database: 'pi',
   define: {
     underscored: true,
+    timestamps: false,
   }
 }

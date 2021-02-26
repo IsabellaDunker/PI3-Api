@@ -20,7 +20,7 @@ module.exports = {
       cellphone: {
         type: Sequelize.STRING,
       },
-      birthDate: {
+      birth_date: {
         type: Sequelize.DATE,
         allowNull: false
       },
