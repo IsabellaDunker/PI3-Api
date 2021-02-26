@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.js",
   "repository": "git@github.com:joaovfsousa/PI3-Api.git",
   "author": "João Vitor Sousa <joaovfsousa@gmail.com>",
   "license": "MIT",
