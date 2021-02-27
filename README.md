@@ -7,9 +7,10 @@
 2. Entre no diretório do projeto.
 3. Rode no terminal `yarn` ou `npm install` para instalar as dependências.
 4. Crie uma instância de banco MySql.
-5. Rode `yarn sequelize db:create` ou `npx sequelize-cli db:create` para criar o banco de dados(Se já não existir).
-6. Rode `yarn sequelize db:migrate` ou `npx sequelize-cli db:migrate` para rodar as migrações.
-7. Rode `yarn dev` ou `npm scripts dev` para iniciar a aplicação com o nodemon.
+5. Crie um arquivo `.env` na raiz do projeto com os dados do arquivo `.env_example` e preencha corretamente com os dados de conexão do banco
+6. Rode `yarn sequelize db:create` ou `npx sequelize-cli db:create` para criar o banco de dados(Se já não existir).
+7. Rode `yarn sequelize db:migrate` ou `npx sequelize-cli db:migrate` para rodar as migrações.
+8. Rode `yarn dev` ou `npm scripts dev` para iniciar a aplicação com o nodemon.
 
 ## Como começar a desenvolver( NUNCA COMMITE DIRETO NA MAIN )
 
