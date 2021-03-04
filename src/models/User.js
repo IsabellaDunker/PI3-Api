@@ -30,9 +30,15 @@ class User extends Model {
         allowNull: false,
         defaultValue: 'Customer'
       },
+      password: {
+        type: DataTypes.STRING,
+      }
     },{
       sequelize,
       timestamps: false,
+      defaultScope: {
+        attributes: { exclude: ['password'] },
+      }
     });
   }
 }

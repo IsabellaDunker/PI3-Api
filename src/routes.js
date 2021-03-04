@@ -10,4 +10,4 @@ router.post('/users', userController.store)
 router.put('/users/:id', userController.update)
 router.delete('/users/:id', userController.delete)
 
-module.exports = router
+module.exports = router;
