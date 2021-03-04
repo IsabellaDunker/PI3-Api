@@ -1,13 +1,17 @@
 var express = require('express')
 var router = express.Router()
 var UserController = require('./controllers/UserController')
+var AuthController = require('./controllers/AuthController')
 
-const userController = new UserController()
+// login routes
+router.post('/login', AuthController.login)
+router.get('/logout', AuthController.logout)
 
-router.get('/users', userController.index)
-router.get('/users/:id', userController.show)
-router.post('/users', userController.store)
-router.put('/users/:id', userController.update)
-router.delete('/users/:id', userController.delete)
+// users routes
+router.get('/users', UserController.index)
+router.get('/users/:id', UserController.show)
+router.post('/users', UserController.store)
+router.put('/users/:id', UserController.update)
+router.delete('/users/:id', UserController.delete)
 
 module.exports = router;

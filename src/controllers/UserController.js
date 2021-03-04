@@ -1,26 +1,26 @@
 const User = require('../models/User');
 
 class UserController {
-  async store(req, res){
+  static async store(req, res){
     const { body } = req
     const user = await User.create(body);
 
     return res.status(201).json(user);
   }
 
-  async show(req, res){
+  static async show(req, res){
     const { id } = req.params;
 
-    const user = await User.findByPk(id);
+    const user = await User.scope('withoutPassword').findByPk(id);
     return res.json(user);
   }
 
-  async index(req, res){
-    const users = await User.findAll();
+  static async index(req, res){
+    const users = await User.scope('withoutPassword').findAll();
     return res.json(users);
   }
 
-  async update(req, res){
+  static async update(req, res){
     const { id } = req.params;
     const { body } = req;
 
@@ -33,7 +33,7 @@ class UserController {
     return res.status(200).json();
   }
 
-  async delete(req, res){
+  static async delete(req, res){
     const { id } = req.params;
 
     await User.destroy({
