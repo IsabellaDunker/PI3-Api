@@ -3,18 +3,17 @@ services:
   api:
     build: .
     ports:
-      - "80:3333"
+      - "3333:3333"
     links: 
       - db
   db:
     image: "mysql"
     restart: always
     ports:
-      - 8080:8080
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: 12345678
       MYSQL_DATABASE: pi
       MYSQL_USER: pi
       MYSQL_PASSWORD: 12345678
-    volumes:
-      - /var/lib/postgres/data:/var/lib/postgresql/data/pgdata
+
