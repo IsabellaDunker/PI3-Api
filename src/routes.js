@@ -7,6 +7,7 @@ var verifyJWT = require('./helpers/verifyJWT');
 // login routes
 router.post('/login', AuthController.login)
 router.get('/logout', verifyJWT, AuthController.logout)
+router.get('/renew', verifyJWT, AuthController.renew)
 
 // users routes
 router.get('/users', verifyJWT, UserController.index)

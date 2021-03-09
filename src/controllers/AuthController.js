@@ -30,6 +30,10 @@ class AuthController {
   static logout(req, res){
     return res.status(200).json({ auth: false, token: null, type: null });
   }
+
+  static renew(req, res){
+    return res.status(200).json({auth: true});
+  }
 }
 
 module.exports = AuthController;
