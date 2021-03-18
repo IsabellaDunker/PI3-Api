@@ -9,7 +9,8 @@ class EnvironmentController {
   }
   
   static async index(req, res){
-    const environments = await Environment.findAll();
+
+    const environments = await Environment.findAll({include: { association: 'products' }})
 
     return res.status(201).json(environments);
   }
@@ -17,7 +18,9 @@ class EnvironmentController {
   static async show(req, res){
     const { id } = req.params;
 
-    const environment = await Environment.findByPk(id);
+    const environment = await Environment.findByPk(id, {
+      include: { association: 'products' }
+    });
 
     return res.json(environment);
   }

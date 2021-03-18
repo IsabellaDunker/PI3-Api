@@ -3,6 +3,7 @@ var router = express.Router()
 var UserController = require('./controllers/UserController')
 var AuthController = require('./controllers/AuthController')
 var EnvironmentController = require('./controllers/EnvironmentController')
+var ProductController =  require('./controllers/ProductController')
 var verifyJWT = require('./helpers/verifyJWT');
 
 // login routes
@@ -23,5 +24,12 @@ router.get('/environments', verifyJWT, EnvironmentController.index)
 router.get('/environments/:id', verifyJWT, EnvironmentController.show)
 router.put('/environments/:id', verifyJWT, EnvironmentController.update)
 router.delete('/environments/:id', verifyJWT, EnvironmentController.delete)
+
+// products routes
+router.post('/products', verifyJWT, ProductController.store)
+router.get('/products', verifyJWT, ProductController.index)
+router.get('/products/:id', verifyJWT, ProductController.show)
+router.put('/products/:id', verifyJWT, ProductController.update)
+router.delete('/products/:id', verifyJWT, ProductController.delete)
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
+const Product = require('./Product');
 
 class Environment extends Model {
     static init(sequelize) {
@@ -22,6 +23,9 @@ class Environment extends Model {
             timestamps: false,
         })
     }
+    static associate(models) {
+      this.hasMany(models.Product, { foreignKey: 'environment_id', as: 'products' });
+  }
 }
 
 module.exports = Environment;
