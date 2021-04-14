@@ -22,7 +22,9 @@ class Order extends Model {
                 },
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE'
-            }, {
+            },
+	},
+	{
                 sequelize,
                 timestamps: false,
         })
