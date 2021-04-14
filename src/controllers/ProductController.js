@@ -57,6 +57,33 @@ class ProductController {
 
         return res.status(200).json();;
     }
+
+    static async canSell(id, units){
+        const product = await Product.findOne({ where: {
+            id: id
+        } });
+
+        const canSell = product.is_available && ((product.has_stock && product.number >= units) || (!product.has_stock));
+
+        return canSell;
+    }
+
+    static async sell(id, units){
+        const product = await Product.findByPk(id);
+        console.log(product);
+        const _canSell = await this.canSell(id, units);
+
+        if(_canSell){
+            await Product.update({ number: product.number - units }, {
+                where: {
+                    id: id
+                }
+            });
+            return { didSell: true, price: product.price * units }
+        } else {
+            return { didSell: false }
+        }
+    }
 }
 
 module.exports = ProductController;

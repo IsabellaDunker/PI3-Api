@@ -11,7 +11,7 @@ class AuthController {
 
     const user = await User.findOne({ where: { cpf: cpf } });
 
-    console.log(user.id)
+
     if(!user) {
       return res.status(401).json({ message: 'User does not exist' });
     }

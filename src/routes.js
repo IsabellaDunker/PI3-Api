@@ -4,6 +4,7 @@ var UserController = require('./controllers/UserController')
 var AuthController = require('./controllers/AuthController')
 var EnvironmentController = require('./controllers/EnvironmentController')
 var ProductController =  require('./controllers/ProductController')
+var OrderController = require('./controllers/OrderController')
 var verifyJWT = require('./helpers/verifyJWT');
 
 // login routes
@@ -31,5 +32,12 @@ router.get('/products', verifyJWT, ProductController.index)
 router.get('/products/:id', verifyJWT, ProductController.show)
 router.put('/products/:id', verifyJWT, ProductController.update)
 router.delete('/products/:id', verifyJWT, ProductController.delete)
+
+// orders routes
+router.post('/orders', verifyJWT, OrderController.store)
+router.get('/orders', verifyJWT, OrderController.index)
+router.get('/orders/:id', verifyJWT, OrderController.show)
+router.put('/orders/:id', verifyJWT, OrderController.update)
+router.delete('/orders/:id', verifyJWT, OrderController.delete)
 
 module.exports = router;

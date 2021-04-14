@@ -42,6 +42,7 @@ class Product extends Model {
 
     static associate(models) {
         this.belongsTo(models.Environment, { foreignKey: 'environment_id', as: 'environment' });
+        this.belongsToMany(models.Order, { foreignKey: 'product_id', through:'products_ordereds' , as: 'orders' });
     }
 }
 
