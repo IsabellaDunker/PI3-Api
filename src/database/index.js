@@ -6,6 +6,7 @@ const Environment = require('../models/Environment');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
 const ProductsOrdered = require('../models/ProductsOrdered');
+const Tab = require('../models/Tab');
 
 const connection = new Sequelize(dbConfig);
 
@@ -14,11 +15,13 @@ Environment.init(connection);
 Product.init(connection);
 Order.init(connection);
 ProductsOrdered.init(connection);
+Tab.init(connection);
 
+User.associate(connection.models);
 Environment.associate(connection.models);
 Product.associate(connection.models);
 Order.associate(connection.models);
-Environment.associate({ Product });
-Product.associate({ Environment });
+Tab.associate(connection.models);
+
 
 module.exports = connection;

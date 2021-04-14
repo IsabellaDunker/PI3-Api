@@ -5,8 +5,9 @@ const ProductsOrdered = require('../models/ProductsOrdered');
 
 class OrderController {
     static async store(req, res){
-        const { waiter_id, products } = req.body;
 
+        const { waiter_id, products, tab_id } = req.body;
+      
         const _canSell = await Promise.all(products.map(async (product) => {
             const { id, units } = product;
             const condition = await ProductController.canSell(id, units);
@@ -16,7 +17,9 @@ class OrderController {
 
 
         if(_canSell){
-            const order = await Order.create({ waiter_id });
+
+            const order = await Order.create({ waiter_id, tab_id });
+          
             await Promise.all(products.map(async (product) => {
                 const { id, units } = product;
                 const { price } = await ProductController.sell(id, units);
@@ -62,10 +65,11 @@ class OrderController {
         }));
 
         let i = 0;
-        const _ordersCopy = await Promise.all(orders.map(async (orders) => {
+        const _ordersCopy = await Promise.all(orders.map((orders) => {
             const ordersCopy = {
                 id: orders.id, 
                 waiter_id: orders.waiter_id,
+                tab_id: orders.tab_id,
                 order_products: _order_products[i]
             }
             i++;
@@ -79,7 +83,8 @@ class OrderController {
         const { id } = req.params;
         
         const order = await Order.findByPk(id);
-        const { waiter_id } = order;
+      
+        const { waiter_id, tab_id } = order;
 
         const productsOrder = await ProductsOrdered.findAll({
             where:{
@@ -109,6 +114,7 @@ class OrderController {
         const orderCopy = {
             id: order.id,
             waiter_id,
+            tab_id,
             order_products,
         }
 

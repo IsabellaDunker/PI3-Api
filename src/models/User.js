@@ -52,6 +52,11 @@ class User extends Model {
       }
     });
   }
+
+  static associate(models) {
+    this.hasMany(models.Tab, { foreignKey: 'user_id', as: 'tabs'});
+  }
+
 }
 
 User.prototype.validPassword = function(password) {
