@@ -25,14 +25,19 @@ class Tab extends Model {
           allowNull: false,
           defaultValue: true,
         },
-      }, {
+      },
+      {
         sequelize,
         timestamps: false,
-      });
+      }
+    );
   }
 
   static associate(models) {
-    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'tabs' });
+    this.belongsTo(models.User.scope('withoutPassword'), {
+      foreignKey: 'user_id',
+      as: 'user'
+    });
     this.hasMany(models.Order, { foreignKey: 'tab_id', as: 'orders' });
   }
 }
