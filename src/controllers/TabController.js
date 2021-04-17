@@ -14,7 +14,7 @@ class TabController {
 
   static async index(req, res) {
     const tabs = await Tab.findAll({
-      include: [ 'user', 'orders' ]
+      include: ['user', 'orders'],
     });
 
     return res.status(200).json(tabs);
@@ -24,7 +24,7 @@ class TabController {
     const { id } = req.params;
 
     const tab = await Tab.findByPk(id, {
-      include: [ 'user', 'orders' ]
+      include: ['user', 'orders'],
     });
 
     return res.status(200).json(tab);
@@ -47,12 +47,12 @@ class TabController {
     const { id } = req.params;
 
     await Tab.destroy({
-        where:{
-            id: id
-        }
-    })
+      where: {
+        id: id,
+      },
+    });
 
-    return res.status(200).json({ message: 'Deleted successfully!' });;
+    return res.status(200).json({ message: 'Deleted successfully!' });
   }
 }
 
