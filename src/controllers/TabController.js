@@ -1,143 +1,63 @@
 const Tab = require('../models/Tab');
-const Order = require('../models/Order');
-const Product = require('../models/Product');
-const ProductsOrdered = require('../models/ProductsOrdered');
 
 class TabController {
   static async store(req, res) {
     const { body } = req;
     const tab = await Tab.create(body);
 
-    return res.status(200).json(tab);
+    return res.status(201).json(tab);
   }
 
   static async index(req, res) {
-    const tabs = await Tab.findAll();
+    const tabs = await Tab.findAll({
+      include: [
+        {
+          association:'user',
+        }, 
+        {
+          association:'orders',
+          attributes: { exclude: ['tab_id'] },
+          include: {
+              association: 'products',
+              through: { attributes: ['price', 'units', 'note'] },
+              attributes: { exclude: ['environment_id'] },
+              include:{
+                association: 'environment'
+              }
+          }
+        }, 
+      ],
+      attributes: { exclude: ['user_id'] },
+    });
 
-    const findOrders = await Promise.all(
-      tabs.map(async (tabs) => {
-        const orders = await Order.findAll({
-          where: {
-            tab_id: tabs.id,
-          },
-        });
-
-        const _orders = await Promise.all(
-          orders.map(async (orders) => {
-            const productsOrder = await ProductsOrdered.findAll({
-              where: {
-                order_id: orders.id,
-              },
-            });
-
-            const order_products = await Promise.all(
-              productsOrder.map(async (productsOrder) => {
-                const product = await Product.findAll({
-                  where: {
-                    id: productsOrder.product_id,
-                  },
-                  include: { association: 'environment' },
-                  attributes: { exclude: ['environment_id'] },
-                });
-
-                const getProductsOrder = {
-                  id: productsOrder.id,
-                  units: productsOrder.units,
-                  price: productsOrder.price,
-                  product,
-                };
-                return getProductsOrder;
-              })
-            );
-
-            const ordersCopy = {
-              id: orders.id,
-              waiter_id: orders.waiter_id,
-              order_products,
-            };
-
-            return ordersCopy;
-          })
-        );
-        return _orders;
-      })
-    );
-
-    let i = 0;
-    const tabsCopy = await Promise.all(
-      tabs.map(async (tabs) => {
-        const _tabsCopy = {
-          id: tabs.id,
-          user_id: tabs.id,
-          is_open: tabs.is_open,
-          orders: findOrders[i],
-        };
-        i++;
-        return _tabsCopy;
-      })
-    );
-
-    return res.status(201).json(tabsCopy);
+    return res.status(200).json(tabs);
   }
 
   static async show(req, res) {
     const { id } = req.params;
 
-    const tab = await Tab.findByPk(id);
-    const { user_id, is_open } = tab;
-
-    const orders = await Order.findAll({
-      where: {
-        tab_id: tab.id,
-      },
+    const tab = await Tab.findByPk(id, {
+      include: [
+        {
+          association:'user',
+        }, 
+        {
+          association:'orders',
+          attributes: { exclude: ['tab_id'] },
+          include: {
+              association: 'products',
+              through: { attributes: ['price', 'units', 'note'] },
+              attributes: { exclude: ['environment_id'] },
+              include:{
+                association: 'environment'
+              }
+          }
+        }, 
+      ],
+      attributes: { exclude: ['user_id'] },
     });
 
-    const _orders = await Promise.all(
-      orders.map(async (orders) => {
-        const productsOrder = await ProductsOrdered.findAll({
-          where: {
-            order_id: orders.id,
-          },
-        });
-
-        const order_products = await Promise.all(
-          productsOrder.map(async (productsOrder) => {
-            const product = await Product.findAll({
-              where: {
-                id: productsOrder.product_id,
-              },
-              include: { association: 'environment' },
-              attributes: { exclude: ['environment_id'] },
-            });
-
-            const getProductsOrder = {
-              id: productsOrder.id,
-              units: productsOrder.units,
-              price: productsOrder.price,
-              product,
-            };
-            return getProductsOrder;
-          })
-        );
-
-        const ordersCopy = {
-          id: orders.id,
-          waiter_id: orders.waiter_id,
-          order_products,
-        };
-
-        return ordersCopy;
-      })
-    );
-
-    const tabCopy = {
-      id: tab.id,
-      user_id,
-      is_open,
-      orders: _orders,
-    };
-
-    res.status(201).json(tabCopy);
+    return res.status(200).json(tab);
   }
 
   static async update(req, res) {
@@ -157,12 +77,12 @@ class TabController {
     const { id } = req.params;
 
     await Tab.destroy({
-        where:{
-            id: id
-        }
-    })
+      where: {
+        id: id,
+      },
+    });
 
-    return res.status(200).json({ message: 'Deleted successfully!' });;
+    return res.status(200).json({ message: 'Deleted successfully!' });
   }
 }
 
