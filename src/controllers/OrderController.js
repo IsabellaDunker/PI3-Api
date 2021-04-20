@@ -40,7 +40,12 @@ class OrderController {
 
   static async index(req, res) {
     const orders = await Order.findAll({
-      include: ['products'],
+      include: [
+        {
+          association: 'products',
+          through: { attributes: ['price', 'units', 'note'] },
+        },
+      ],
     });
 
     return res.status(201).json(orders);
@@ -50,7 +55,19 @@ class OrderController {
     const { id } = req.params;
 
     const orders = await Order.findByPk(id, {
-      include: ['products'],
+      include: [
+        {
+          association: 'products',
+          through: { attributes: ['price', 'units', 'note'] },
+        },
+        {
+          association: 'tab',
+          attributes: { exclude: ['user_id'] },
+          include:{
+            association: 'user'
+          }
+        }
+      ],
     });
 
     return res.status(201).json(orders);
