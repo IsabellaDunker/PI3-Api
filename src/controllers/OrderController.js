@@ -44,8 +44,20 @@ class OrderController {
         {
           association: 'products',
           through: { attributes: ['price', 'units', 'note'] },
+          attributes: { exclude: ['environment_id'] },
+          include:{
+            association: 'environment'
+          }
         },
+        {
+          association: 'tab',
+          attributes: { exclude: ['user_id'] },
+          include:{
+            association: 'user'
+          }
+        }
       ],
+      attributes: { exclude: ['tab_id'] },
     });
 
     return res.status(201).json(orders);
@@ -59,6 +71,10 @@ class OrderController {
         {
           association: 'products',
           through: { attributes: ['price', 'units', 'note'] },
+          attributes: { exclude: ['environment_id'] },
+          include:{
+            association: 'environment'
+          }
         },
         {
           association: 'tab',
@@ -68,6 +84,7 @@ class OrderController {
           }
         }
       ],
+      attributes: { exclude: ['tab_id'] },
     });
 
     return res.status(201).json(orders);

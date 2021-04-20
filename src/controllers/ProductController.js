@@ -20,6 +20,14 @@ class ProductController {
         {
           association: 'orders',
           through: { attributes: ['price', 'units', 'note'] },
+          attributes: { exclude: ['tab_id'] },
+          include: {
+            association: 'tab',
+            attributes: { exclude: ['user_id'] },
+            include: {
+              association: 'user',
+            },
+          },
         },
       ],
     });
@@ -43,6 +51,14 @@ class ProductController {
         {
           association: 'orders',
           through: { attributes: ['price', 'units', 'note'] },
+          attributes: { exclude: ['tab_id'] },
+          include: {
+            association: 'tab',
+            attributes: { exclude: ['user_id'] },
+            include: {
+              association: 'user',
+            },
+          },
         },
       ],
       attributes: { exclude: ['environment_id'] },

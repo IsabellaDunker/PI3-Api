@@ -1,8 +1,4 @@
 const Tab = require('../models/Tab');
-const Order = require('../models/Order');
-const Product = require('../models/Product');
-const ProductsOrdered = require('../models/ProductsOrdered');
-const User = require('../models/User');
 
 class TabController {
   static async store(req, res) {
@@ -14,7 +10,24 @@ class TabController {
 
   static async index(req, res) {
     const tabs = await Tab.findAll({
-      include: ['user', 'orders'],
+      include: [
+        {
+          association:'user',
+        }, 
+        {
+          association:'orders',
+          attributes: { exclude: ['tab_id'] },
+          include: {
+              association: 'products',
+              through: { attributes: ['price', 'units', 'note'] },
+              attributes: { exclude: ['environment_id'] },
+              include:{
+                association: 'environment'
+              }
+          }
+        }, 
+      ],
+      attributes: { exclude: ['user_id'] },
     });
 
     return res.status(200).json(tabs);
@@ -24,7 +37,24 @@ class TabController {
     const { id } = req.params;
 
     const tab = await Tab.findByPk(id, {
-      include: ['user', 'orders'],
+      include: [
+        {
+          association:'user',
+        }, 
+        {
+          association:'orders',
+          attributes: { exclude: ['tab_id'] },
+          include: {
+              association: 'products',
+              through: { attributes: ['price', 'units', 'note'] },
+              attributes: { exclude: ['environment_id'] },
+              include:{
+                association: 'environment'
+              }
+          }
+        }, 
+      ],
+      attributes: { exclude: ['user_id'] },
     });
 
     return res.status(200).json(tab);
