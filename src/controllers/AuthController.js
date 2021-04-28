@@ -20,15 +20,15 @@ class AuthController {
       return res.status(401).json({ message: 'Wrong credentials'})
     }
 
-    const { id, type } = user;
+    const { id } = user;
 
     const token = jwt.sign({ id }, process.env.SECRET);
 
-    res.status(200).json({ auth: true, token: token, type: type });
+    res.status(200).json({ auth: true, token: token, user: user });
   }
 
   static logout(req, res){
-    return res.status(200).json({ auth: false, token: null, type: null });
+    return res.status(200).json({ auth: false, token: null, user: null });
   }
 
   static renew(req, res){
