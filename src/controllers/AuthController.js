@@ -17,14 +17,14 @@ class AuthController {
     }
 
     if(!(await user.validPassword(password))){
-      return res.status(401).json({ message: 'Wrong credentials'})
+      return res.status(401).json({ message: 'Wrong credentials' })
     }
 
     const { id } = user;
 
     const token = jwt.sign({ id }, process.env.SECRET);
 
-    res.status(200).json({ auth: true, token: token, user: user });
+    res.status(200).json({ auth: true, token: token, user: {...user.dataValues, password: null}});
   }
 
   static logout(req, res){
