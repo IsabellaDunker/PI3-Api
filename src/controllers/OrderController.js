@@ -91,7 +91,7 @@ class OrderController {
       return res.status(400).json({ error: 'Order not found.' });
     }
 
-    return res.status(201).json(orders);
+    return res.status(201).json(order);
   }
 
   static async update(req, res) {
