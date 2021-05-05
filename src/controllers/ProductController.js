@@ -1,13 +1,18 @@
-const Product = require('../models/Product');
-const Environment = require('../models/Environment');
-const Order = require('../models/Order');
+const Product = require('../models/Product')
 
 class ProductController {
   static async store(req, res) {
     const { body } = req;
-    const product = await Product.create(body);
 
-    return res.status(201).json(product);
+    try {
+      const product = await Product.create(body);
+
+      return res.status(201).json(product);
+    } catch (error) {
+      if (error) {
+        return res.status(400).json({ error: 'Try again.' });
+      }
+    }
   }
 
   static async index(req, res) {
@@ -32,21 +37,16 @@ class ProductController {
       ],
     });
 
-    res.status(201).json(products);
+    res.status(200).json(products);
   }
 
   static async show(req, res) {
     const { id } = req.params;
 
-    const products = await Product.findByPk(id);
-
-    const environment = await Product.findByPk(id, {
+    const product = await Product.findByPk(id, {
       include: [
         {
-          association: 'environment',
-          where: {
-            id: products.environment_id,
-          },
+          association: 'environment'
         },
         {
           association: 'orders',
@@ -64,7 +64,11 @@ class ProductController {
       attributes: { exclude: ['environment_id'] },
     });
 
-    res.status(201).json(environment);
+    if (product == null) {
+      return res.status(400).json({ error: 'Product not found.' });
+    }
+
+    res.status(200).json(product);
   }
 
   static async update(req, res) {
@@ -77,11 +81,23 @@ class ProductController {
       },
     });
 
-    return res.status(200).json();
+    const product = await Product.findByPk(id);
+
+    if (product == null) {
+      return res.status(400).json({ error: 'Product not found.' });
+    }
+
+    return res.status(200).json({ message: 'Updated successfully!', product });
   }
 
   static async delete(req, res) {
     const { id } = req.params;
+
+    const product = await Product.findByPk(id);
+
+    if (product == null) {
+      return res.status(400).json({ error: 'Product not found.' });
+    }
 
     await Product.destroy({
       where: {
@@ -89,7 +105,7 @@ class ProductController {
       },
     });
 
-    return res.status(200).json();
+    return res.status(200).json({ message: 'Deleted successfully!' });
   }
 
   static async canSell(id, units) {
