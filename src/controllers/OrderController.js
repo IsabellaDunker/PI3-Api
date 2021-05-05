@@ -142,7 +142,7 @@ class OrderController {
       })
     );
 
-    return res.status(200).json({ message: 'Updated successfully!' });
+    return res.status(200).json({ message: 'Updated successfully!', order });
   }
 
   static async delete(req, res) {

@@ -1,4 +1,4 @@
-const Product = require('../models/Product')
+const Product = require('../models/Product');
 
 class ProductController {
   static async store(req, res) {
@@ -46,7 +46,7 @@ class ProductController {
     const product = await Product.findByPk(id, {
       include: [
         {
-          association: 'environment'
+          association: 'environment',
         },
         {
           association: 'orders',

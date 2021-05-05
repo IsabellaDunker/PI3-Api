@@ -10,7 +10,7 @@ class UserController {
       return res.status(201).json(user);
     } catch (error) {
       if (error) {
-        return res.status(400).json({ error: 'User not found.' });
+        return res.status(400).json({ error: 'Try again.' });
       }
     }
   }
@@ -48,7 +48,7 @@ class UserController {
       return res.status(400).json({ error: 'User not found.' });
     }
 
-    return res.status(200).json({ error: 'Updated succesfully! ' });
+    return res.status(200).json({ error: 'Updated succesfully! ', user });
   }
 
   static async delete(req, res) {

@@ -53,7 +53,9 @@ class EnvironmentController {
       return res.status(400).json({ error: 'Environment not found.' });
     }
 
-    return res.status(200).json({ message: 'Updated successfully!' });
+    return res
+      .status(200)
+      .json({ message: 'Updated successfully!', environment });
   }
 
   static async delete(req, res) {
