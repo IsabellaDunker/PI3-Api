@@ -27,7 +27,7 @@ class Order extends Model {
       },
       {
         sequelize,
-        timestamps: false,
+        timestamps: true,
       }
     );
   }

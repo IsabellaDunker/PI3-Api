@@ -66,7 +66,7 @@ class OrderController {
   static async show(req, res) {
     const { id } = req.params;
 
-    const orders = await Order.findByPk(id, {
+    const order = await Order.findByPk(id, {
       include: [
         {
           association: 'products',
@@ -87,7 +87,11 @@ class OrderController {
       attributes: { exclude: ['tab_id'] },
     });
 
-    return res.status(201).json(orders);
+    if (order == null) {
+      return res.status(400).json({ error: 'Order not found.' });
+    }
+
+    return res.status(201).json(order);
   }
 
   static async update(req, res) {
@@ -102,6 +106,12 @@ class OrderController {
         },
       }
     );
+
+    const order = await Order.findByPk(id);
+
+    if (order == null) {
+      return res.status(400).json({ error: 'Order not found.' });
+    }
 
     const productsOrder = await ProductsOrdered.findAll({
       where: {
@@ -132,11 +142,17 @@ class OrderController {
       })
     );
 
-    return res.status(200).json({ message: 'Updated successfully!' });
+    return res.status(200).json({ message: 'Updated successfully!', order });
   }
 
   static async delete(req, res) {
     const { id } = req.params;
+
+    const order = await Order.findByPk(id);
+
+    if (order == null) {
+      return res.status(400).json({ error: 'Order not found.' });
+    }
 
     await Order.destroy({
       where: {
