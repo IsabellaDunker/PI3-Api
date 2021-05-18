@@ -3,6 +3,8 @@ const ProductController = require('./ProductController');
 const Product = require('../models/Product');
 const ProductsOrdered = require('../models/ProductsOrdered');
 
+const { Op } = require("sequelize");
+
 class OrderController {
   static async store(req, res) {
     const { waiter_id, products, tab_id } = req.body;
@@ -58,6 +60,44 @@ class OrderController {
         }
       ],
       attributes: { exclude: ['tab_id'] },
+    });
+
+    return res.status(201).json(orders);
+  }
+
+  static async reportsW(req, res){
+    const orders = await Order.findAll({
+      where : {
+        waiter_id: req.query?.waiter_id,
+      }
+    });
+
+    return res.status(201).json(orders);
+  }
+
+  static async reportsP(req, res){
+    const orders = await Order.findAll({
+      include: {
+        association: 'products',
+        where : {
+          name: req.query?.name,
+        }
+      }
+    });
+
+    return res.status(201).json(orders);
+  }
+
+  static async reportsD(req, res){
+    const orders = await Order.findAll({
+      where : {
+        // greater
+        // created_at:{
+        //   [Op.gt]: req.query?.created_at,
+        // },
+        // equal
+        created_at: req.query?.created_at,
+      }
     });
 
     return res.status(201).json(orders);
