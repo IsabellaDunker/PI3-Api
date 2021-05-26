@@ -66,7 +66,7 @@ class OrderController {
   static async reportsWaiter(req, res){
     const orders = await Order.findAll({
       where : {
-        waiter_id: req.query?.waiter_id,
+        waiter_id: req.query?.waiterId,
       }
     });
 
@@ -78,7 +78,7 @@ class OrderController {
       include: {
         association: 'products',
         where : {
-          name: req.query?.name,
+          id: req.query?.productId,
         }
       }
     });
@@ -89,7 +89,7 @@ class OrderController {
   static async reportsDate(req, res){
     const orders = await Order.findAll({
       where : {
-        created_at: req.query?.created_at,
+        created_at: req.query?.createdAt,
       }
     });
 

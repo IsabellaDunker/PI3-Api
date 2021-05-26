@@ -41,7 +41,7 @@ router.get('/orders/:id', verifyJWT, OrderController.show);
 router.put('/orders/:id', verifyJWT, OrderController.update);
 router.delete('/orders/:id', verifyJWT, OrderController.delete);
 router.get('/reports/waiter', verifyJWT, OrderController.reportsWaiter)
-router.get('/reports/products', verifyJWT, OrderController.reportsProduct)
+router.get('/reports/product', verifyJWT, OrderController.reportsProduct)
 router.get('/reports/date', verifyJWT, OrderController.reportsDate)
 // tabs routes
 router.post('/tabs', verifyJWT, TabController.store);
