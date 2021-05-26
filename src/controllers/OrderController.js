@@ -86,6 +86,24 @@ class OrderController {
     return res.status(201).json(orders);
   }
 
+  static async reportsTab(req, res){
+    const orders = await Order.findAll({
+      include: [
+        {
+          association: 'tab',
+          where : {
+            id: req.query?.tabId,
+          }
+        },
+        {
+          association: 'products'
+        }
+      ]
+    });
+
+    return res.status(201).json(orders);
+  }
+
   static async reportsDate(req, res){
     const orders = await Order.findAll({
       where : {
