@@ -63,6 +63,39 @@ class OrderController {
     return res.status(201).json(orders);
   }
 
+  static async reportsWaiter(req, res){
+    const orders = await Order.findAll({
+      where : {
+        waiter_id: req.query?.waiter_id,
+      }
+    });
+
+    return res.status(201).json(orders);
+  }
+
+  static async reportsProduct(req, res){
+    const orders = await Order.findAll({
+      include: {
+        association: 'products',
+        where : {
+          name: req.query?.name,
+        }
+      }
+    });
+
+    return res.status(201).json(orders);
+  }
+
+  static async reportsDate(req, res){
+    const orders = await Order.findAll({
+      where : {
+        created_at: req.query?.created_at,
+      }
+    });
+
+    return res.status(201).json(orders);
+  }
+
   static async show(req, res) {
     const { id } = req.params;
 
